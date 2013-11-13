@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace RealPacman
 {
@@ -19,9 +20,16 @@ namespace RealPacman
         {
 
         }
-
+        
         public override void Update(GameTime gameTime)
         {
+            KeyboardState keyboard = Keyboard.GetState();
+            if(keyboard.IsKeyDown(Keys.Right))
+            {
+                Velocity = new Vector2(32, 0);
+                
+            }
+
             base.Update(gameTime);
         }
 
