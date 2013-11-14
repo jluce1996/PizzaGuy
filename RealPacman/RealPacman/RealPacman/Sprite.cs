@@ -70,6 +70,8 @@ namespace RealPacman
             set { rotation = value % MathHelper.TwoPi; }
         }
 
+        
+        
         public int Frame
         {
             get { return currentFrame; }
