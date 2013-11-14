@@ -28,6 +28,7 @@ namespace RealPacman
             {
                 Velocity = new Vector2(32, 0);
                 Rotation = 0;
+                
             }
             if (keyboard.IsKeyDown(Keys.Left))
             {
