@@ -18,7 +18,7 @@ namespace RealPacman
 
     class Pacman : Sprite
     {
-        int speed = 64;
+        int speed = 100;
         Direction direction;
         Vector2 target;
 
