@@ -78,6 +78,7 @@ namespace RealPacman
             // TODO: Add your update logic here
             pacman.Update(gameTime);
             base.Update(gameTime);
+
         }
 
         /// <summary>
