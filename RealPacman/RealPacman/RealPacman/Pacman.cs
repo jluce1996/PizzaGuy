@@ -18,7 +18,7 @@ namespace RealPacman
 
     class Pacman : Sprite
     {
-        int speed = 100;
+        int speed = 92;
         Direction direction;
         Vector2 target;
 
@@ -31,33 +31,35 @@ namespace RealPacman
             base(location, texture, initialFrame, velocity)
         {
             direction = Direction.RIGHT;
-            target = location;
+            target = location + new Vector2(32, 0);
             UpdateDirection();
         }
 
         public void UpdateDirection()
         {
+           
+
             switch (direction)
             {
                 case Direction.RIGHT:
                     Velocity = new Vector2(speed, 0);
                     Rotation = 0;
-                    target = location + new Vector2(speed, 0);
+                    target = location + new Vector2(32, 0);
                     break;
                 case Direction.LEFT:
                     Velocity = new Vector2(-speed,0);
                     Rotation = MathHelper.Pi;
-                    target = location + new Vector2(-speed, 0);
+                    target = location + new Vector2(-32, 0);
                     break;
                 case Direction.DOWN:
                     Velocity = new Vector2(0, speed);
                     Rotation = MathHelper.PiOver2;
-                    target = location + new Vector2(0, speed);
+                    target = location + new Vector2(0, 32);
                     break;
                 case Direction.UP:
                     Velocity = new Vector2(0, -speed);
                     Rotation = -MathHelper.PiOver2;
-                    target = location + new Vector2(0, -speed);
+                    target = location + new Vector2(0, -32);
                     break;
             }
         }
@@ -82,15 +84,35 @@ namespace RealPacman
                 direction = Direction.UP;  
             }
 
-            if (velocity.X > 0 && location.X >= target.X ||
-                velocity.X < 0 && location.X <= target.X ||
-                velocity.Y > 0 && location.Y >= target.Y ||
-                velocity.Y < 0 && location.Y <= target.Y 
-                )
+
+            if (velocity.X > 0 && direction == Direction.LEFT ||
+                velocity.X < 0 && direction == Direction.RIGHT ||
+                velocity.Y < 0 && direction == Direction.DOWN ||
+                velocity.Y > 0 && direction == Direction.UP)
             {
+                // if target was 32, 0, then we would want it to be 0, 0
+                switch (direction)
+                {
+                    case Direction.LEFT: target = target - new Vector2(32, 0); break;
+                    case Direction.RIGHT: target = target + new Vector2(32, 0);  break;
+                    case Direction.UP: target = target - new Vector2(0, 32);  break;
+                    case Direction.DOWN: target = target + new Vector2(0, 32); break;
+                }
+
                 UpdateDirection();
             }
 
+            if ((velocity.X > 0 && location.X >= target.X) ||
+                (velocity.X < 0 && location.X <= target.X) ||
+                (velocity.Y > 0 && location.Y >= target.Y) ||
+                (velocity.Y < 0 && location.Y <= target.Y)
+                )
+            {
+                location = target;
+                UpdateDirection();
+            }
+
+          
             base.Update(gameTime);
         }
        
