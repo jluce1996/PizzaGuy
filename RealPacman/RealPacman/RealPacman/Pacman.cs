@@ -111,8 +111,7 @@ namespace RealPacman
                 location = target;
                 UpdateDirection();
             }
-
-          
+   
             base.Update(gameTime);
         }
        
