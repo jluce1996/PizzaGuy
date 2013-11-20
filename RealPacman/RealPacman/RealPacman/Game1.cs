@@ -53,9 +53,9 @@ namespace RealPacman
             Spritesheet = Content.Load<Texture2D>(@"Pacman");
             pacman = new Pacman(new Vector2(0, 0), Spritesheet, new Rectangle(0, 0, 32, 32), Vector2.Zero);
 
-            // TODO: use this.Content to load your game content here
+            // TODO use this.Content to load your game content here
         }
-
+       
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
         /// all content.
@@ -64,7 +64,7 @@ namespace RealPacman
         {
             // TODO: Unload any non ContentManager content here
         }
-
+       
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
