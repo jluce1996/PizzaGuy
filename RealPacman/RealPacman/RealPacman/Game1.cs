@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using xTile;
+using xTile.Layers;
+using xTile.Display;
 
 namespace RealPacman
 {
@@ -21,7 +23,9 @@ namespace RealPacman
         SpriteBatch spriteBatch;
         Pacman pacman;
         Texture2D Spritesheet;
-
+        Map map;
+        IDisplayDevice xnaDisplayDevice;
+        xTile.Dimensions.Rectangle viewport;
 
         public Game1()
         {
@@ -38,6 +42,8 @@ namespace RealPacman
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            xnaDisplayDevice = new XnaDisplayDevice(Content, GraphicsDevice);
+            viewport = new xTile.Dimensions.Rectangle(new xTile.Dimensions.Size(this.Window.ClientBounds.Width, this.Window.ClientBounds.Height));
 
             base.Initialize();
         }
@@ -51,7 +57,12 @@ namespace RealPacman
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Spritesheet = Content.Load<Texture2D>(@"Pacman");
-            pacman = new Pacman(new Vector2(0, 0), Spritesheet, new Rectangle(0, 0, 32, 32), Vector2.Zero);
+            
+
+            map = Content.Load<Map>("pacmanmap");
+            map.LoadTileSheets(xnaDisplayDevice);
+
+            pacman = new Pacman(new Vector2(32, 32), Spritesheet, new Rectangle(0, 0, 32, 32), Vector2.Zero, map);
 
             // TODO use this.Content to load your game content here
         }
@@ -88,11 +99,15 @@ namespace RealPacman
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
+
+            map.Draw(xnaDisplayDevice, viewport);
+
             spriteBatch.Begin();
             pacman.Draw(spriteBatch); 
+
             base.Draw(gameTime);
             spriteBatch.End();
         }

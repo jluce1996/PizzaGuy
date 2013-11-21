@@ -4,7 +4,7 @@
   <TileSheets>
     <TileSheet Id="untitled tile sheet">
       <Description><![CDATA[]]></Description>
-      <ImageSource><![CDATA[..\..\esktop\breakout.png]]></ImageSource>
+      <ImageSource><![CDATA[breakout.png]]></ImageSource>
       <Alignment SheetSize="10 x 10" TileSize="32 x 32" Margin="0 x 0" Spacing="8 x 8" />
       <Properties />
     </TileSheet>

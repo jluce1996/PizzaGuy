@@ -54,6 +54,8 @@
   <ItemGroup>
     <Compile Include="pacmanmap.tide">
       <Name>pacmanmap</Name>
+      <Importer>TideImporter</Importer>
+      <Processor>TideProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
