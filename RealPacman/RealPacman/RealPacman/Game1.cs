@@ -44,7 +44,6 @@ namespace RealPacman
             // TODO: Add your initialization logic here
             xnaDisplayDevice = new XnaDisplayDevice(Content, GraphicsDevice);
             viewport = new xTile.Dimensions.Rectangle(new xTile.Dimensions.Size(this.Window.ClientBounds.Width, this.Window.ClientBounds.Height));
-
             base.Initialize();
         }
 

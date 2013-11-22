@@ -43,7 +43,7 @@ namespace RealPacman
 
         public bool CanMove (Direction dir)
         {
-            Vector2 othertarget = Vector2.Zero; ;
+            Vector2 othertarget = Vector2.Zero;
 
             switch (dir)
             {
@@ -102,8 +102,6 @@ namespace RealPacman
        
         public override void Update(GameTime gameTime)
         {
-            
-
             KeyboardState keyboard = Keyboard.GetState();
             if(keyboard.IsKeyDown(Keys.Right))
             {
@@ -125,16 +123,12 @@ namespace RealPacman
                 if(CanMove(Direction.UP))
                     direction = Direction.UP;  
             }
-
-            
-
             
             if (velocity.X > 0 && direction == Direction.LEFT ||
                 velocity.X < 0 && direction == Direction.RIGHT ||
                 velocity.Y < 0 && direction == Direction.DOWN ||
                 velocity.Y > 0 && direction == Direction.UP)
             {
-
                 // if target was 32, 0, then we would want it to be 0, 0
                 switch (direction)
                 {
@@ -143,11 +137,9 @@ namespace RealPacman
                     case Direction.UP: target = target - new Vector2(0, 32);  break;
                     case Direction.DOWN: target = target + new Vector2(0, 32); break;
                 }
-
                 UpdateDirection();
             }
             
-
             if ((velocity.X > 0 && location.X >= target.X) ||
                 (velocity.X < 0 && location.X <= target.X) ||
                 (velocity.Y > 0 && location.Y >= target.Y) ||
@@ -160,15 +152,10 @@ namespace RealPacman
                 {
                     UpdateDirection();
                 }
-
-               
-
-            }
-   
+            }   
             base.Update(gameTime);
         }
        
-
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);
