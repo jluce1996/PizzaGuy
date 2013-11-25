@@ -21,6 +21,7 @@ namespace RealPacman
     {
         int speed = 92;
         Direction direction;
+        Direction newdirection;
         Vector2 target;
         xTile.Map map;
         
@@ -79,22 +80,22 @@ namespace RealPacman
                 case Direction.RIGHT:
                     Velocity = new Vector2(speed, 0);
                     Rotation = 0;
-                    target = location + new Vector2(32, 0);
+                    target = target + new Vector2(32, 0);
                     break;
                 case Direction.LEFT:
                     Velocity = new Vector2(-speed,0);
                     Rotation = MathHelper.Pi;
-                    target = location + new Vector2(-32, 0);
+                    target = target + new Vector2(-32, 0);
                     break;
                 case Direction.DOWN:
                     Velocity = new Vector2(0, speed);
                     Rotation = MathHelper.PiOver2;
-                    target = location + new Vector2(0, 32);
+                    target = target + new Vector2(0, 32);
                     break;
                 case Direction.UP:
                     Velocity = new Vector2(0, -speed);
                     Rotation = -MathHelper.PiOver2;
-                    target = location + new Vector2(0, -32);
+                    target = target + new Vector2(0, -32);
                     break;
             }
 
@@ -105,40 +106,43 @@ namespace RealPacman
             KeyboardState keyboard = Keyboard.GetState();
             if(keyboard.IsKeyDown(Keys.Right))
             {
-                if (CanMove(Direction.RIGHT))
-                    direction = Direction.RIGHT;   
+                //if (CanMove(Direction.RIGHT))
+                    newdirection = Direction.RIGHT;   
             }
             if (keyboard.IsKeyDown(Keys.Left))
             {
-                if(CanMove(Direction.LEFT))
-                    direction = Direction.LEFT;
+                //if(CanMove(Direction.LEFT))
+                    newdirection = Direction.LEFT;
             }
             if (keyboard.IsKeyDown(Keys.Down))
             {
-                if(CanMove(Direction.DOWN))
-                    direction = Direction.DOWN;                   
+                //if(CanMove(Direction.DOWN))
+                    newdirection = Direction.DOWN;                   
             }
             if (keyboard.IsKeyDown(Keys.Up))
             {
-                if(CanMove(Direction.UP))
-                    direction = Direction.UP;  
+                //if(CanMove(Direction.UP))
+                    newdirection = Direction.UP;  
             }
             
-            if (velocity.X > 0 && direction == Direction.LEFT ||
-                velocity.X < 0 && direction == Direction.RIGHT ||
-                velocity.Y < 0 && direction == Direction.DOWN ||
-                velocity.Y > 0 && direction == Direction.UP)
+            
+            if ((direction == Direction.RIGHT && newdirection == Direction.LEFT) ||
+                (direction == Direction.LEFT && newdirection == Direction.RIGHT) ||
+                (direction == Direction.UP && newdirection == Direction.DOWN) ||
+                (direction == Direction.DOWN && newdirection == Direction.UP))
             {
                 // if target was 32, 0, then we would want it to be 0, 0
                 switch (direction)
                 {
                     case Direction.LEFT: target = target - new Vector2(32, 0); break;
-                    case Direction.RIGHT: target = target + new Vector2(32, 0);  break;
-                    case Direction.UP: target = target - new Vector2(0, 32);  break;
+                    case Direction.RIGHT: target = target + new Vector2(32, 0); break;
+                    case Direction.UP: target = target - new Vector2(0, 32); break;
                     case Direction.DOWN: target = target + new Vector2(0, 32); break;
                 }
+                direction = newdirection;
                 UpdateDirection();
             }
+            
             
             if ((velocity.X > 0 && location.X >= target.X) ||
                 (velocity.X < 0 && location.X <= target.X) ||
@@ -148,10 +152,16 @@ namespace RealPacman
             {
                 location = target;
 
-                if (CanMove(direction))
+                if (CanMove(newdirection))
+                {
+                    direction = newdirection;
+                    UpdateDirection();
+                }
+                else if (CanMove(direction))
                 {
                     UpdateDirection();
                 }
+
             }   
             base.Update(gameTime);
         }
